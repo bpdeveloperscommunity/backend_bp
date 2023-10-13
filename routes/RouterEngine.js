@@ -20,6 +20,7 @@ const testimonialRequiredFields = [ 'name', 'content', 'profile', 'role', 'ratin
 const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
 const coursePageRequiredFields = ['programmingLanguages', 'courseModules', 'coursedetails'];
+const userRegisterRequiredFields = ['name', 'email', 'mobile', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
 const CourseRequiredFields = ['name', 'image', 'duration', 'trainingMode']
