@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3300;
 const MONGO_URL = process.env.MONGO_URL
 const routeEngine = require('./routes/RouterEngine');
+const cors = require('cors');
 
 
 // Connect to MongoDB using Mongoose
@@ -25,6 +26,7 @@ db.once('open', () => {
 // Middleware for JSON and URL-encoded data
 app.use(express.json()); // Parse JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
+app.use(cors())
 
 // Using the routes
 app.use('/api', routeEngine);
