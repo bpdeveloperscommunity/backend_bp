@@ -16,7 +16,7 @@ const courseModel = require('../models/CoursesModel');
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
 const trainingModeRequiredFields = ['title', 'image', 'description'];
-const testimonialRequiredFields = [ 'name', 'content', 'profile', 'role', 'rating' ];
+const testimonialRequiredFields = [ 'name', 'content', 'role', 'rating' ];
 const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
 const coursePageRequiredFields = ['programmingLanguages', 'courseModules', 'coursedetails'];
@@ -78,7 +78,7 @@ router.delete('/coursePage/:id', coursePageController.remove);
 router.get('/users/all', userRegisterController.getAll);
 router.post('/register', userRegisterController.create);
 router.get('/user/:id', userRegisterController.getById);
-router.put('/usrer/update/:id', userRegisterController.update);
+router.put('/user/update/:id', userRegisterController.update);
 router.delete('/user/delete/:id', userRegisterController.remove);
 
 router.get('/faq', FaqController.getAll);
