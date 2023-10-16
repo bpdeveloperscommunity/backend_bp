@@ -35,7 +35,10 @@ const faqSchema = new mongoose.Schema({
 
 // Define the main course schema
 const courseSchema = new mongoose.Schema({
-  title: String,
+  course: {
+    type:String,
+    require:true
+  },
   programmingLanguages: [programmingLanguagesSchema],
   courseModules: [courseModulesSchema],
   courseDetails: [courseDetailSchema],
