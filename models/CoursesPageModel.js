@@ -20,6 +20,16 @@ const courseDetailSchema = new mongoose.Schema({
   enrolled:Number,
   traningMode:String
 });
+const faqSchema = new mongoose.Schema({
+    question:{
+      type:String,
+      require:true
+    },
+    answer:{
+      type:String,
+      require:true
+    }
+})
 
 // Define the main course schema
 const courseSchema = new mongoose.Schema({
@@ -27,6 +37,28 @@ const courseSchema = new mongoose.Schema({
   programmingLanguages: [programmingLanguagesSchema],
   courseModules: [courseModulesSchema],
   coursedetails: [courseDetailSchema],
+  batchStart:{
+    type:Date,
+    require:true
+  },
+  faq:[faqSchema],
+  courseVideo:{
+    type:String,
+  },
+  salarypackage:{
+    minSalary:{
+      type:String,
+      require:true
+    },
+    highestSalary:{
+      type:String,
+      require:true
+    },
+    duration:{
+      type:String,
+      require:true
+    }
+  }
 });
 
 module.exports = mongoose.model('Course', courseSchema);
