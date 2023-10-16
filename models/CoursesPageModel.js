@@ -47,7 +47,7 @@ const courseSchema = new mongoose.Schema({
   courseVideo:{
     type:String,
   },
-  salaryPackage:[
+  salaryPackage:[{
     minSalary:{
       type:String,
       require:true
@@ -60,7 +60,7 @@ const courseSchema = new mongoose.Schema({
       type:String,
       require:true
     }
-  ]
+  }]
 });
 
 module.exports = mongoose.model('Course', courseSchema);
