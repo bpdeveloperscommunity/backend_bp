@@ -18,7 +18,9 @@ const courseDetailSchema = new mongoose.Schema({
   instructor: String,
   duration: String,
   enrolled:Number,
-  traningMode:String
+  traningMode:String,
+  course:String,
+  image:String
 });
 const faqSchema = new mongoose.Schema({
     question:{
