@@ -38,31 +38,31 @@ const courseSchema = new mongoose.Schema({
   title: String,
   programmingLanguages: [programmingLanguagesSchema],
   courseModules: [courseModulesSchema],
-  coursedetails: [courseDetailSchema],
-  batchStart:{
-    type:String,
-    require:true
+  courseDetails: [courseDetailSchema],
+  batchStart: {
+    type: String,
+    required: true,
   },
-  faq:[faqSchema],
-  courseVideo:{
-    type:String,
+  faq: [faqSchema],
+  courseVideo: {
+    type: String,
   },
-  salaryPackage:[
+  salaryPackage: [
     {
-      minSalary:{
-        type:String,
-        require:true
+      minSalary: {
+        type: String,
+        required: true,
       },
-      highestSalary:{
-        type:String,
-        require:true
+      highestSalary: {
+        type: String,
+        required: true,
       },
-      duration:{
-        type:String,
-        require:true
-      }
-    }
-  ] 
+      duration: {
+        type: String,
+        required: true,
+      },
+    },
+  ], 
 });
 
 module.exports = mongoose.model('Course', courseSchema);
