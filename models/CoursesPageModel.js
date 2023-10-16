@@ -40,7 +40,7 @@ const courseSchema = new mongoose.Schema({
   courseModules: [courseModulesSchema],
   coursedetails: [courseDetailSchema],
   batchStart:{
-    type:Date,
+    type:String,
     require:true
   },
   faq:[faqSchema],
