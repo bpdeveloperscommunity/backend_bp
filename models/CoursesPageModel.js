@@ -68,5 +68,8 @@ const courseSchema = new mongoose.Schema({
   ], 
 });
 
-const coursePageModel = mongoose.model('Course', courseSchema);
-module.exports = coursePageModel
+const mernPageModel = mongoose.model('MernCourse', courseSchema);
+const pythonPageModel = mongoose.model('PythonCourse', courseSchema);
+const javaPageModel = mongoose.model('JavaCourse', courseSchema);
+
+module.exports = {mernPageModel, pythonPageModel, javaPageModel }
