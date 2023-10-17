@@ -20,7 +20,7 @@ const trainingModeRequiredFields = ['title', 'image', 'description'];
 const testimonialRequiredFields = [ 'name', 'content', 'role', 'rating' ];
 const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
-const mernPageRequiredFields = ['programmingLanguages', 'courseModules', 'courseDetails', 'batchStart', 'faq', 'courseVideo', 'salaryPackage'];
+const coursePageRequiredFields = ['programmingLanguages', 'courseModules', 'courseDetails', 'batchStart', 'faq', 'courseVideo', 'salaryPackage'];
 const userRegisterRequiredFields = ['name', 'email', 'mobile', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
@@ -35,7 +35,6 @@ const trainingModeController = createController(TrainingMode, trainingModeRequir
 const testimonialController = createController(Testimonial, testimonialRequiredFields);
 const YoutubeVideosController = createController(YoutubeVideos, youtubeVideosRequiredFields);
 const advantageController = createController(AdwantagesModel, advantageRequiredFields);
-const coursePageController = createController(CoursesPage, coursePageRequiredFields);
 const userRegisterController = createController(RegisterModel, userRegisterRequiredFields)
 const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
@@ -44,9 +43,9 @@ const PastEventsController = createController(PastEventsModel, PastEventsRequire
 const mernCourseController = createController(mernPageModel, coursePageRequiredFields )
 const pythonCourseController = createController(pythonPageModel, coursePageRequiredFields )
 const javaCourseController = createController(javaPageModel, coursePageRequiredFields )
-const dataScienceCourseController = createController(CoursesPage, coursePageRequiredFields )
-const digitalMarketingCourseController = createController(CoursesPage, coursePageRequiredFields )
-const cloudOopsCourseController = createController(CoursesPage, coursePageRequiredFields )
+// const dataScienceCourseController = createController(CoursesPage, coursePageRequiredFields )
+// const digitalMarketingCourseController = createController(CoursesPage, coursePageRequiredFields )
+// const cloudOopsCourseController = createController(CoursesPage, coursePageRequiredFields )
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -99,25 +98,25 @@ router.put('/java/:id', javaCourseController.update);
 router.delete('/java/:id', javaCourseController.remove);
 
 
-router.get('/data-science', dataScienceCourseController.getAll);
-router.post('/data-science', dataScienceCourseController.create);
-router.get('/data-science/:id', dataScienceCourseController.getById);
-router.put('/data-science/:id', dataScienceCourseController.update);
-router.delete('/data-science/:id', dataScienceCourseController.remove);
+// router.get('/data-science', dataScienceCourseController.getAll);
+// router.post('/data-science', dataScienceCourseController.create);
+// router.get('/data-science/:id', dataScienceCourseController.getById);
+// router.put('/data-science/:id', dataScienceCourseController.update);
+// router.delete('/data-science/:id', dataScienceCourseController.remove);
 
 
-router.get('/digital-marketing', digitalMarketingCourseController.getAll);
-router.post('/digital-marketing', digitalMarketingCourseController.create);
-router.get('/digital-marketing/:id', digitalMarketingCourseController.getById);
-router.put('/digital-marketing/:id', digitalMarketingCourseController.update);
-router.delete('/digital-marketing/:id', digitalMarketingCourseController.remove);
+// router.get('/digital-marketing', digitalMarketingCourseController.getAll);
+// router.post('/digital-marketing', digitalMarketingCourseController.create);
+// router.get('/digital-marketing/:id', digitalMarketingCourseController.getById);
+// router.put('/digital-marketing/:id', digitalMarketingCourseController.update);
+// router.delete('/digital-marketing/:id', digitalMarketingCourseController.remove);
 
 
-router.get('/cloud-oops', cloudOopsCourseController.getAll);
-router.post('/cloud-oops', cloudOopsCourseController.create);
-router.get('/cloud-oops/:id', cloudOopsCourseController.getById);
-router.put('/cloud-oops/:id', cloudOopsCourseController.update);
-router.delete('/cloud-oops/:id', cloudOopsCourseController.remove);
+// router.get('/cloud-oops', cloudOopsCourseController.getAll);
+// router.post('/cloud-oops', cloudOopsCourseController.create);
+// router.get('/cloud-oops/:id', cloudOopsCourseController.getById);
+// router.put('/cloud-oops/:id', cloudOopsCourseController.update);
+// router.delete('/cloud-oops/:id', cloudOopsCourseController.remove);
 
 router.get('/users/all', userRegisterController.getAll);
 router.post('/register', userRegisterController.create);
