@@ -12,6 +12,7 @@ const RegisterModel = require('../models/RegisterModel')
 const FaqModel = require('../models/FaqModel')
 const HeroSectionModel = require('../models/HeroSectionModel')
 const courseModel = require('../models/CoursesModel');
+const PastEventsModel = require('../models/EventsModel');
 
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
@@ -24,6 +25,7 @@ const userRegisterRequiredFields = ['name', 'email', 'mobile', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
 const CourseRequiredFields = ['name', 'image', 'duration', 'trainingMode']
+const PastEventsRequiredFields = ['image', 'title', 'tag',' content', 'date', 'time']
 
 
 // Create dynamic controllers for each model
@@ -37,6 +39,7 @@ const userRegisterController = createController(RegisterModel, userRegisterRequi
 const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
 const CourseController = createController(courseModel, CourseRequiredFields)
+const PastEventsController = createController(PastEventsModel, PastEventsRequiredFields)
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -98,5 +101,11 @@ router.post('/course/add', CourseController.create);
 router.get('/course/:id', CourseController.getById);
 router.put('/course/update/:id', CourseController.update);
 router.delete('/course/delete/:id', CourseController.remove);
+
+router.get('/past-events', PastEventsController.getAll);
+router.post('/past-events/add', PastEventsController.create);
+router.get('/past-events/:id', PastEventsController.getById);
+router.put('/past-events/update/:id', PastEventsController.update);
+router.delete('/past-events/delete/:id', PastEventsController.remove);
 
 module.exports = router;
