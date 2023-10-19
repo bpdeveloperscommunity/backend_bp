@@ -13,15 +13,6 @@ const courseModulesSchema = new mongoose.Schema({
   topics: String
 });
 
-// Define a schema for instructors
-const courseDetailSchema = new mongoose.Schema({
-  instructor: String,
-  duration: String,
-  enrolled:Number,
-  trainingMode:String,
-  course:String,
-  image:String
-});
 const faqSchema = new mongoose.Schema({
     question:{
       type:String,
@@ -41,7 +32,32 @@ const courseSchema = new mongoose.Schema({
   },
   programmingLanguages: [programmingLanguagesSchema],
   courseModules: [courseModulesSchema],
-  courseDetails: [courseDetailSchema],
+  courseDetails: {
+    instructor: {
+      type:String,
+      required:true
+    },
+    duration: {
+      type:String,
+      required:true
+    },
+    enrolled:{
+      type:String,
+      required:true
+    },
+    trainingMode:{
+      type:String,
+      required:true
+    },
+    course:{
+      type:String,
+      required:true
+    },
+    image:{
+      type:String,
+      required:true
+    }
+  },
   batchStart: {
     type: String,
     required: true,
@@ -50,7 +66,7 @@ const courseSchema = new mongoose.Schema({
   courseVideo: {
     type: String,
   },
-  salaryPackage: [
+  salaryPackage: 
     {
       minSalary: {
         type: String,
@@ -65,7 +81,6 @@ const courseSchema = new mongoose.Schema({
         required: true,
       },
     },
-  ], 
 });
 
 const mernPageModel = mongoose.model('MernCourse', courseSchema);
