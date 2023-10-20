@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const createController = require('../controllers/ControllerEngine');
-const {javaPageModel, mernPageModel, pythonPageModel} = require('../models/CoursesPageModel')
 
 const Company = require('../models/CompaniesModel');
 const TrainingMode = require('../models/TrainingMode');
@@ -11,7 +10,7 @@ const AdwantagesModel = require('../models/AdwantagesModel');
 const RegisterModel = require('../models/RegisterModel')
 const FaqModel = require('../models/FaqModel')
 const HeroSectionModel = require('../models/HeroSectionModel')
-const courseModel = require('../models/CoursesModel');
+const CourseModel = require('../models/CoursesModel');
 const PastEventsModel = require('../models/EventsModel');
 
 // Define required fields for each model
@@ -20,11 +19,10 @@ const trainingModeRequiredFields = ['title', 'image', 'description'];
 const testimonialRequiredFields = [ 'name', 'content', 'role', 'rating' ];
 const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
-const coursePageRequiredFields = ['programmingLanguages', 'courseModules', 'courseDetails', 'batchStart', 'faq', 'courseVideo', 'salaryPackage'];
 const userRegisterRequiredFields = ['name', 'email', 'phone', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
-const CourseRequiredFields = ['name', 'image', 'duration', 'trainingMode']
+const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages' ]
 const PastEventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time']
 
@@ -38,14 +36,8 @@ const advantageController = createController(AdwantagesModel, advantageRequiredF
 const userRegisterController = createController(RegisterModel, userRegisterRequiredFields)
 const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
-const CourseController = createController(courseModel, CourseRequiredFields)
+const CourseController = createController(CourseModel, CourseRequiredFields)
 const PastEventsController = createController(PastEventsModel, PastEventsRequiredFields)
-const mernCourseController = createController(mernPageModel, coursePageRequiredFields )
-const pythonCourseController = createController(pythonPageModel, coursePageRequiredFields )
-const javaCourseController = createController(javaPageModel, coursePageRequiredFields )
-// const dataScienceCourseController = createController(CoursesPage, coursePageRequiredFields )
-// const digitalMarketingCourseController = createController(CoursesPage, coursePageRequiredFields )
-// const cloudOopsCourseController = createController(CoursesPage, coursePageRequiredFields )
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -78,45 +70,6 @@ router.get('/advantages/:id', advantageController.getById);
 router.put('/advantages/:id', advantageController.update);
 router.delete('/advantages/:id', advantageController.remove);
 
-router.get('/mern', mernCourseController.getAll);
-router.post('/mern', mernCourseController.create);
-router.get('/mern/:id', mernCourseController.getById);
-router.put('/mern/:id', mernCourseController.update);
-router.delete('/mern/:id', mernCourseController.remove);
-
-router.get('/python', pythonCourseController.getAll);
-router.post('/python', pythonCourseController.create);
-router.get('/python/:id', pythonCourseController.getById);
-router.put('/python/:id', pythonCourseController.update);
-router.delete('/python/:id', pythonCourseController.remove);
-
-
-router.get('/java', javaCourseController.getAll);
-router.post('/java', javaCourseController.create);
-router.get('/java/:id', javaCourseController.getById);
-router.put('/java/:id', javaCourseController.update);
-router.delete('/java/:id', javaCourseController.remove);
-
-
-// router.get('/data-science', dataScienceCourseController.getAll);
-// router.post('/data-science', dataScienceCourseController.create);
-// router.get('/data-science/:id', dataScienceCourseController.getById);
-// router.put('/data-science/:id', dataScienceCourseController.update);
-// router.delete('/data-science/:id', dataScienceCourseController.remove);
-
-
-// router.get('/digital-marketing', digitalMarketingCourseController.getAll);
-// router.post('/digital-marketing', digitalMarketingCourseController.create);
-// router.get('/digital-marketing/:id', digitalMarketingCourseController.getById);
-// router.put('/digital-marketing/:id', digitalMarketingCourseController.update);
-// router.delete('/digital-marketing/:id', digitalMarketingCourseController.remove);
-
-
-// router.get('/cloud-oops', cloudOopsCourseController.getAll);
-// router.post('/cloud-oops', cloudOopsCourseController.create);
-// router.get('/cloud-oops/:id', cloudOopsCourseController.getById);
-// router.put('/cloud-oops/:id', cloudOopsCourseController.update);
-// router.delete('/cloud-oops/:id', cloudOopsCourseController.remove);
 
 router.get('/users/all', userRegisterController.getAll);
 router.post('/register', userRegisterController.create);
@@ -147,5 +100,20 @@ router.post('/past-events/add', PastEventsController.create);
 router.get('/past-events/:id', PastEventsController.getById);
 router.put('/past-events/update/:id', PastEventsController.update);
 router.delete('/past-events/delete/:id', PastEventsController.remove);
+
+
+//courses
+router.post('/courses', CourseController.create);
+router.get('/courses', CourseController.getAll);
+router.get('/courses/:courseId', CourseController.getById);
+router.put('/courses/:courseId', CourseController.update);
+router.delete('/courses/:courseId', CourseController.remove);
+
+//faqs
+router.post('/courses/:courseId/faqs', FaqController.getAll);
+router.get('/courses/:courseId/faqs', FaqController.create);
+router.get('/courses/:courseId/faqs/:faqId', FaqController.getById);
+router.put('/courses/:courseId/faqs/:faqId', FaqController.update);
+router.delete('/courses/:courseId/faqs/:faqId', FaqController.update);
 
 module.exports = router;
