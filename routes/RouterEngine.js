@@ -10,7 +10,7 @@ const AdwantagesModel = require('../models/AdwantagesModel');
 const RegisterModel = require('../models/RegisterModel')
 const FaqModel = require('../models/FaqModel')
 const HeroSectionModel = require('../models/HeroSectionModel')
-const CourseModel = require('../models/CoursesModel');
+const Course = require('../models/CoursesModel');
 const PastEventsModel = require('../models/EventsModel');
 
 // Define required fields for each model
@@ -22,7 +22,7 @@ const advantageRequiredFields = ['image', 'title', 'content'];
 const userRegisterRequiredFields = ['name', 'email', 'phone', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
-const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages' ]
+const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage" ]
 const PastEventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time']
 
@@ -36,7 +36,7 @@ const advantageController = createController(AdwantagesModel, advantageRequiredF
 const userRegisterController = createController(RegisterModel, userRegisterRequiredFields)
 const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
-const CourseController = createController(CourseModel, CourseRequiredFields)
+const CourseController = createController(Course, CourseRequiredFields)
 const PastEventsController = createController(PastEventsModel, PastEventsRequiredFields)
 
 // Define routes for each model
@@ -89,12 +89,6 @@ router.get('/heroSection/:id', HeroSectionController.getById);
 router.put('/heroSection/update/:id', HeroSectionController.update);
 router.delete('/heroSection/delete/:id', HeroSectionController.remove);
 
-router.get('/course', CourseController.getAll);
-router.post('/course/add', CourseController.create);
-router.get('/course/:id', CourseController.getById);
-router.put('/course/update/:id', CourseController.update);
-router.delete('/course/delete/:id', CourseController.remove);
-
 router.get('/past-events', PastEventsController.getAll);
 router.post('/past-events/add', PastEventsController.create);
 router.get('/past-events/:id', PastEventsController.getById);
@@ -105,15 +99,23 @@ router.delete('/past-events/delete/:id', PastEventsController.remove);
 //courses
 router.post('/courses', CourseController.create);
 router.get('/courses', CourseController.getAll);
-router.get('/courses/:courseId', CourseController.getById);
-router.put('/courses/:courseId', CourseController.update);
-router.delete('/courses/:courseId', CourseController.remove);
+router.get('/course/:id', CourseController.getById);
+router.put('/courses/:id', CourseController.update);
+router.delete('/courses/:id', CourseController.remove);
 
-//faqs
-router.post('/courses/:courseId/faqs', FaqController.getAll);
-router.get('/courses/:courseId/faqs', FaqController.create);
-router.get('/courses/:courseId/faqs/:faqId', FaqController.getById);
-router.put('/courses/:courseId/faqs/:faqId', FaqController.update);
-router.delete('/courses/:courseId/faqs/:faqId', FaqController.update);
+router.get('/course/:courseId/faqs', async (req, res) => {
+    const courseId = req.params.courseId;
+    
+    try {
+      const course = await CourseModel.findById(courseId);
+      if (!course) {
+        return res.status(404).json({ error: 'Course not found' });
+      }
+      
+      res.json(course.faqs);
+    } catch (error) {
+      return res.status(404).json({error: error})
+    }
+  });
 
 module.exports = router;

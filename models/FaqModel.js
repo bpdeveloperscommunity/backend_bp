@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
-
-const FaqSchema = new mongoose.Schema({
-    question:{
-        type:String,
-        require:true
+const mongoose = require('mongoose')
+const faqSchema = new mongoose.Schema({
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+      required: true,
     },
-    answer:{
-        type:String,
-        require:true
-    }
-})
-
-const FaqModel = new mongoose.model('FaqModel', FaqSchema)
-module.exports = FaqModel
+    question: { type: String, required: true },
+    answer: { type: String, required: true },
+  });
+  
+  // Create and export the FAQ model
+  const FaqModel = mongoose.model('FAQ', faqSchema);
+  
+  module.exports = FaqModel;
