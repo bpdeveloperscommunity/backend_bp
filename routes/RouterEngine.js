@@ -12,6 +12,7 @@ const FaqModel = require('../models/FaqModel')
 const HeroSectionModel = require('../models/HeroSectionModel')
 const Course = require('../models/CoursesModel');
 const PastEventsModel = require('../models/EventsModel');
+const QuizModel = require('../models/QuizModal')
 
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
@@ -25,6 +26,8 @@ const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImag
 const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage" ]
 const PastEventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time']
+const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
+
 
 
 // Create dynamic controllers for each model
@@ -38,6 +41,7 @@ const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
 const CourseController = createController(Course, CourseRequiredFields)
 const PastEventsController = createController(PastEventsModel, PastEventsRequiredFields)
+const QuizController = createController(QuizModel, QuizRequiredFields)
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -94,6 +98,12 @@ router.post('/past-events/add', PastEventsController.create);
 router.get('/past-events/:id', PastEventsController.getById);
 router.put('/past-events/update/:id', PastEventsController.update);
 router.delete('/past-events/delete/:id', PastEventsController.remove);
+
+router.get('/Quiz', QuizController.getAll);
+router.post('/Quiz/add', QuizController.create);
+router.get('/Quiz/:id', QuizController.getById);
+router.put('/Quiz/update/:id', QuizController.update);
+router.delete('/Quiz/delete/:id', QuizController.remove);
 
 
 //courses
