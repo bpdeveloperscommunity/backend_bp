@@ -1,29 +1,31 @@
 const mongoose = require('mongoose')
 
 const HeroSectionSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        require:true
-    },
-    subtitle:{
-        type:String,
-        require:true
-    },
+    heroText:[{
+        title:{
+            type:String,
+            require:true
+        },
+        subtitle:{
+            type:String,
+            require:true
+        },
+    }],
     image:{
         type:String,
         require:true
     },
-    backgroundImage:{
+    rating:{
         type:String,
-        require:true
+        required:true
     },
-    backgroundColor:{
-        type:String,
-        require:true
+    partners:{
+        type:Number,
+        required:true
     },
-    festivalTime:{
-        type:Boolean,
-        require:true
+    minSalary:{
+        type:Number,
+        required:true
     }
 })
 

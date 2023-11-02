@@ -11,7 +11,7 @@ const RegisterModel = require('../models/RegisterModel')
 const FaqModel = require('../models/FaqModel')
 const HeroSectionModel = require('../models/HeroSectionModel')
 const Course = require('../models/CoursesModel');
-const PastEventsModel = require('../models/EventsModel');
+const EventsModel = require('../models/EventsModel');
 const QuizModel = require('../models/QuizModal')
 
 // Define required fields for each model
@@ -22,10 +22,10 @@ const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
 const userRegisterRequiredFields = ['name', 'email', 'phone', 'course'];
 const FaqRequiredFields = ['question', 'answer']
-const HeroSectionRequiredFields = ['title', 'subtitle', 'image', 'backgroundImageLarge', 'backgroundImageSmall', 'backgroundColor']
+const HeroSectionRequiredFields = ['heroText', 'image', 'rating', 'partners', 'minSalary']
 const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage" ]
-const PastEventsRequiredFields = ['image', 'title', 'tag',
-'content', 'date', 'time']
+const EventsRequiredFields = ['image', 'title', 'tag',
+'content', 'date', 'time', "eventType", "topic"]
 const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
 
 
@@ -40,7 +40,7 @@ const userRegisterController = createController(RegisterModel, userRegisterRequi
 const FaqController = createController(FaqModel, FaqRequiredFields)
 const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
 const CourseController = createController(Course, CourseRequiredFields)
-const PastEventsController = createController(PastEventsModel, PastEventsRequiredFields)
+const EventsController = createController(EventsModel, EventsRequiredFields)
 const QuizController = createController(QuizModel, QuizRequiredFields)
 
 // Define routes for each model
@@ -93,11 +93,110 @@ router.get('/heroSection/:id', HeroSectionController.getById);
 router.put('/heroSection/update/:id', HeroSectionController.update);
 router.delete('/heroSection/delete/:id', HeroSectionController.remove);
 
-router.get('/past-events', PastEventsController.getAll);
-router.post('/past-events/add', PastEventsController.create);
-router.get('/past-events/:id', PastEventsController.getById);
-router.put('/past-events/update/:id', PastEventsController.update);
-router.delete('/past-events/delete/:id', PastEventsController.remove);
+router.post('/heroSection/:id/heroText/add', async (req, res) => {
+  const id = req.params.id; // Get the HeroSection ID from the URL parameter
+  const heroTextData = req.body; // Get the heroText data from the request body
+
+  try {
+    const heroSection = await HeroSectionModel.findById(id);
+
+    if (!heroSection) {
+      return res.status(404).json({ error: 'HeroSection not found' });
+    }
+
+    // Push the new heroText data into the heroText array
+    heroSection.heroText.push(heroTextData);
+
+    // Save the updated HeroSection with the new heroText
+    const updatedHeroSection = await heroSection.save();
+
+    res.status(201).json(updatedHeroSection);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+// Update a specific heroText within a specific HeroSection
+router.put('/heroSection/:heroSectionId/heroText/:heroTextId/update', async (req, res) => {
+  const heroSectionId = req.params.heroSectionId;
+  const heroTextId = req.params.heroTextId;
+  const updatedHeroTextData = req.body;
+
+  try {
+    const heroSection = await HeroSectionModel.findById(heroSectionId);
+
+    if (!heroSection) {
+      return res.status(404).json({ error: 'HeroSection not found' });
+    }
+
+    const heroText = heroSection.heroText.id(heroTextId);
+
+    if (!heroText) {
+      return res.status(404).json({ error: 'heroText not found' });
+    }
+
+    // Update the heroText properties
+    heroText.set(updatedHeroTextData);
+
+    // Save the updated HeroSection
+    const updatedHeroSection = await heroSection.save();
+
+    res.json(updatedHeroSection);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+router.get('/heroSection/:id/heroText', async (req, res) => {
+  const id = req.params.id;
+  
+  try {
+    const text = await HeroSectionModel.findById(id);
+    if (!text) {
+      return res.status(404).json({ error: 'text not found' });
+    }
+    
+    res.json(text.heroText);
+  } catch (error) {
+    return res.status(404).json({error: error})
+  }
+});
+// Delete a specific heroText within a specific HeroSection
+router.delete('/heroSection/:heroSectionId/heroText/:heroTextId/delete', async (req, res) => {
+  const heroSectionId = req.params.heroSectionId;
+  const heroTextId = req.params.heroTextId;
+
+  try {
+    const heroSection = await HeroSectionModel.findById(heroSectionId);
+
+    if (!heroSection) {
+      return res.status(404).json({ error: 'HeroSection not found' });
+    }
+
+    // Find the index of the heroText in the heroText array
+    const heroTextIndex = heroSection.heroText.findIndex((text) => text._id == heroTextId);
+
+    if (heroTextIndex === -1) {
+      return res.status(404).json({ error: 'heroText not found' });
+    }
+
+    // Remove the heroText using splice
+    heroSection.heroText.splice(heroTextIndex, 1);
+
+    // Save the updated HeroSection
+    const updatedHeroSection = await heroSection.save();
+
+    res.json(updatedHeroSection);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+router.get('/events', EventsController.getAll);
+router.post('/events/add', EventsController.create);
+router.get('/events/:id', EventsController.getById);
+router.put('/events/update/:id', EventsController.update);
+router.delete('/events/delete/:id', EventsController.remove);
 
 router.get('/Quiz', QuizController.getAll);
 router.post('/Quiz/add', QuizController.create);

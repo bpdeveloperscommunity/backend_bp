@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
-const UpcomingEventsSchema = new mongoose.Schema({
+const EventsSchema = new mongoose.Schema({
     image:{
         type:String,
         require:true
+    },
+    eventType:{
+        type:String,
+        required:true
     },
     title:{
         type:String,
@@ -26,39 +30,14 @@ const UpcomingEventsSchema = new mongoose.Schema({
     },
     BookTicketLink:{
         type:String,
-        require:true
+    },
+    topic:{
+        type:String
     }
 
 })
 
-const PastEventsSchema = new mongoose.Schema({
-    image:{
-        type:String,
-        require:true
-    },
-    title:{
-        type:String,
-        require:true
-    },
-    tag:{
-        type:String,
-        require:true
-    },
-    content:{
-        type:String,
-        require:true
-    },
-    date:{
-        type:String,
-        require:true
-    },
-    time:{
-        type:String,
-        require:true
-    }
 
-})
+const EventsModel = new mongoose.model('eventsModel', EventsSchema)
 
-const PastEventsModel = new mongoose.model('eventsModel', PastEventsSchema)
-
-module.exports = PastEventsModel
+module.exports = EventsModel
