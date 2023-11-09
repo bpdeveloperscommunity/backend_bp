@@ -13,6 +13,7 @@ const HeroSectionModel = require('../models/HeroSectionModel')
 const Course = require('../models/CoursesModel');
 const EventsModel = require('../models/EventsModel');
 const QuizModel = require('../models/QuizModal')
+const BlogsModel = require('../models/BlogsModel')
 
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
@@ -27,6 +28,7 @@ const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents'
 const EventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time', "eventType", "topic"]
 const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
+const BlogsRequiredFields = ['title', 'subtitle', 'image', 'content']
 
 
 
@@ -42,6 +44,7 @@ const HeroSectionController = createController(HeroSectionModel, HeroSectionRequ
 const CourseController = createController(Course, CourseRequiredFields)
 const EventsController = createController(EventsModel, EventsRequiredFields)
 const QuizController = createController(QuizModel, QuizRequiredFields)
+const BlogController = createController(BlogsModel, BlogsRequiredFields)
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -86,6 +89,12 @@ router.post('/faq/add', FaqController.create);
 router.get('/faq/:id', FaqController.getById);
 router.put('/faq/update/:id', FaqController.update);
 router.delete('/faq/delete/:id', FaqController.remove);
+
+router.get('/blogs', BlogController.getAll);
+router.post('/blogs/add', BlogController.create);
+router.get('/blogs/:id', BlogController.getById);
+router.put('/blogs/update/:id', BlogController.update);
+router.delete('/blogs/delete/:id', BlogController.remove);
 
 router.get('/heroSection', HeroSectionController.getAll);
 router.post('/heroSection/add', HeroSectionController.create);
