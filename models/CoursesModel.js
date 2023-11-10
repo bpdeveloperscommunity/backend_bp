@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 // Define the Course Schema
 const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
+  courseDescription:{type:String, required:true},
+  certification:{type:String, required:true},
+  courseFor:{type:String, required:true},
+  designation:{type:String, required:true},
+  salaryDescription:{type:String, required:true},
+  courseHeroPoints:{type:String, required:true},
   courseDuration: { type: String, required: true },
   enrolledStudents: { type: Number, default: 0 },
   modeOfTraining: { type: String, default: "Online and Offline" },

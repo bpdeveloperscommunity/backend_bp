@@ -24,7 +24,7 @@ const advantageRequiredFields = ['image', 'title', 'content'];
 const userRegisterRequiredFields = ['name', 'email', 'phone', 'course'];
 const FaqRequiredFields = ['question', 'answer']
 const HeroSectionRequiredFields = ['heroText', 'image', 'rating', 'partners', 'minSalary']
-const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage" ]
+const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'courseVideo', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage", 'courseDescription', 'certification', 'courseFor', 'designation', 'salaryDescription', 'courseHeroPoints' ]
 const EventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time', "eventType", "topic"]
 const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
