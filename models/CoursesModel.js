@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema({
   salaryDescription:{type:String, required:true},
   courseHeroPoints:{type:String, required:true},
   courseDuration: { type: String, required: true },
-  enrolledStudents: { type: Number, default: 0 },
+  enrolledStudents: { type: String, default: 0 },
   modeOfTraining: { type: String, default: "Online and Offline" },
   courseVideo: { type: String, required: true },
   minSalary: { type: String, required: true },
@@ -32,7 +32,7 @@ faqs: [{
 }],
 
 instructors: [{
-    enrolled: Number,
+    enrolled: String,
     name: String,
     email: String,
 }],

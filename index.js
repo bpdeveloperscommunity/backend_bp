@@ -1,13 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose'); // Import Mongoose
+const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 3300;
-const MONGO_URL = process.env.MONGO_URL
 const routeEngine = require('./routes/RouterEngine');
 const cors = require('cors');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 
+app.use(cors())
 // Configure AWS S3
 const s3 = new AWS.S3({
   accessKeyId: "AKIASULQMX62Y26NSJEH",
@@ -22,7 +22,7 @@ const upload = multer({
 });
 
 // Define a route for uploading images
-app.post('aws/upload', upload.single('image'), (req, res) => {
+app.post('/aws/upload', upload.single('image'), (req, res) => {
   const file = req.file;
 
   if (!file) {
@@ -45,6 +45,65 @@ app.post('aws/upload', upload.single('image'), (req, res) => {
     res.status(200).json({ message: 'Image uploaded successfully', imageUrl: data.Location });
   });
 });
+app.get('/aws/images', async (req, res) => {
+  const params = {
+    Bucket: 'bepractical', // Replace with your S3 bucket name
+  };
+
+  // Use the S3 SDK to list objects in the bucket
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      console.error('Error listing objects in S3:', err);
+      return res.status(500).json({ message: 'Failed to fetch images from S3' });
+    }
+
+    // Extract image URLs from the S3 response
+    const images = data.Contents.map((object) => {
+      return {
+        image: object.Key,
+        // You can include additional information if needed
+      };
+    });
+
+    res.status(200).json(images);
+  });
+});
+
+// ...
+
+// Define a route for deleting an image by its filename
+app.delete('/aws/delete/:filename', async (req, res) => {
+  const filename = req.params.filename;
+
+  // Specify the S3 object to delete
+  const params = {
+    Bucket: 'bepractical', // Replace with your S3 bucket name
+    Key: filename,
+  };
+
+  // Use the S3 SDK to delete the object from the bucket
+  s3.deleteObject(params, async (err, data) => {
+    if (err) {
+      console.error('Error deleting object from S3:', err);
+      return res.status(500).json({ message: 'Failed to delete image from S3' });
+    }
+
+    // If the S3 deletion is successful, also remove the entry from MongoDB
+    try {
+      const deletedEntity = await ImageStoreModel.findOneAndDelete({ image: filename });
+      if (!deletedEntity) {
+        return res.status(404).json({ message: 'Image not found in MongoDB' });
+      }
+
+      res.status(200).json({ message: 'Image deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting image from MongoDB:', error);
+      res.status(500).json({ message: 'Failed to delete image from MongoDB' });
+    }
+  });
+});
+
+// ...
 
 
 // Connect to MongoDB using Mongoose
@@ -66,7 +125,7 @@ db.once('open', () => {
 // Middleware for JSON and URL-encoded data
 app.use(express.json()); // Parse JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
-app.use(cors())
+app.use(cors());
 
 // Using the routes
 app.use('/api', routeEngine);
