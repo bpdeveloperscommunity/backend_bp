@@ -14,6 +14,7 @@ const Course = require('../models/CoursesModel');
 const EventsModel = require('../models/EventsModel');
 const QuizModel = require('../models/QuizModal')
 const BlogsModel = require('../models/BlogsModel')
+const ourCourseModel = require('../models/OurCourse')
 
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
@@ -29,6 +30,7 @@ const EventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time', "eventType", "topic"]
 const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
 const BlogsRequiredFields = ['title', 'subtitle', 'image', 'content']
+const OurCourseRequiredFields = ['image', 'courseName', 'description', 'courseDuration', 'HighestCtc', 'BatchStarting', 'PageLink', 'courses', 'courePoints', 'certificate', 'courseDescription', 'salaryDescription', 'courseFor', 'designation']
 
 
 
@@ -45,6 +47,7 @@ const CourseController = createController(Course, CourseRequiredFields)
 const EventsController = createController(EventsModel, EventsRequiredFields)
 const QuizController = createController(QuizModel, QuizRequiredFields)
 const BlogController = createController(BlogsModel, BlogsRequiredFields)
+const ourCoursesController = createController(ourCourseModel, OurCourseRequiredFields)
 
 // Define routes for each model
 router.get('/companies', companyController.getAll);
@@ -118,6 +121,7 @@ router.get('/course/:id', CourseController.getById);
 router.put('/courses/:id', CourseController.update);
 router.delete('/courses/:id', CourseController.remove);
 
+
 router.get('/course/:courseId/faqs', async (req, res) => {
     const courseId = req.params.courseId;
     
@@ -132,5 +136,28 @@ router.get('/course/:courseId/faqs', async (req, res) => {
       return res.status(404).json({error: error})
     }
   });
+
+  //ourcourses
+router.post('/ourCourses', ourCoursesController.create);
+router.get('/ourCourses', ourCoursesController.getAll);
+router.get('/ourCourses/:id', ourCoursesController.getById);
+router.put('/ourCourses/:id', ourCoursesController.update);
+router.delete('/ourCourses/:id', ourCoursesController.remove);
+
+
+router.get('/ourCourses/:ourCoursesId/faqs', async (req, res) => {
+  const ourCourseId = req.params.courseId;
+  
+  try {
+    const ourCourse = await ourCourseModel.findById(ourCourseId);
+    if (!ourCourse) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+    
+    res.json(ourCourse.faqs);
+  } catch (error) {
+    return res.status(404).json({error: error})
+  }
+});
 
 module.exports = router;
