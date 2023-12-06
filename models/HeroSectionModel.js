@@ -26,6 +26,10 @@ const HeroSectionSchema = new mongoose.Schema({
     minSalary:{
         type:Number,
         required:true
+    },
+    courseType:{
+        type:String,
+        required:true
     }
 })
 
