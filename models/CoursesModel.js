@@ -27,7 +27,8 @@ const courseSchema = new mongoose.Schema({
 }],
 SEO:{
     title:String,
-    description:String
+    description:String,
+    conical_url:String
 },
 
 faqs: [{
