@@ -21,10 +21,12 @@ const ourCoursesModeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   BatchStarting: {
     type: String,
     required: true,
   },
+  
   PageLink:{
     type:String,
     required:true
@@ -33,7 +35,7 @@ const ourCoursesModeSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  certificate:{
+  certification:{
     type:String,
     required:true
   },
@@ -41,30 +43,56 @@ const ourCoursesModeSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  
     salaryDescription:{
     type:String,
     required:true
   },
+
   courseFor:{
     type:String,
     required:true
   },
+
   designation:{
     type:String,
     required:true
   },
+
   courseBenifits:{
     type:String,
     required:true
   },
+  instructor:{
+    name:String,
+    email:String,
+  },
+
   faqs: [{
     question: String,
     answer: String,
 }],
+programmingLanguages:[
+  {
+    image:String,
+    name:String
+  }
+],
 
   courses:[
     {
-        CourseId:String
+          CourseId:String,
+          CourseName:String,
+          CourseImage:String,
+          courseDuration:String,
+          BatchingStrating:String,
+          courseDescription:String,
+          CourseModules:[
+            {
+              title:String,
+              topics:String
+            }
+          ]
     }
   ]
 });

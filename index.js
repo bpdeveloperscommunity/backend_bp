@@ -6,8 +6,15 @@ const routeEngine = require('./routes/RouterEngine');
 const cors = require('cors');
 const multer = require('multer');
 const AWS = require('aws-sdk');
+const courseRegisterModal = require('./models/courseRegister')
+const { registerUser, sendBrochure } = require('./templates/emailTemplates');
+const { sendEmail } = require('./required/mailer');
 
-app.use(cors())
+// Middleware for JSON and URL-encoded data
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
+app.use(cors());
+
 // Configure AWS S3
 const s3 = new AWS.S3({
   accessKeyId: "AKIASULQMX62Y26NSJEH",
@@ -104,6 +111,27 @@ app.delete('/aws/delete/:filename', async (req, res) => {
 });
 
 // ...
+app.post('/course/register', async (req, res) => {
+  try {
+    const { name, email, phone, course, downloadLink } = req.body;
+
+    // Save user data to MongoDB
+    const user = new courseRegisterModal({ name, email, phone, course });
+    await user.save();
+
+
+    // Send registration email
+    const registrationEmail = registerUser(name, email, downloadLink);
+    await sendEmail(email, 'Registration Successful', registrationEmail);
+
+    res.status(200).send('Registration successful. Brochure download link sent to your email.');
+  } catch (error) {
+    console.error('Error during registration', error);
+    res.status(500).send('Error during registration');
+  }
+});
+
+
 
 
 // Connect to MongoDB using Mongoose
@@ -122,10 +150,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB database');
 });
 
-// Middleware for JSON and URL-encoded data
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
-app.use(cors());
+
 
 // Using the routes
 app.use('/api', routeEngine);

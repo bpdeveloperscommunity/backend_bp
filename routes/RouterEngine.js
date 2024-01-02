@@ -14,7 +14,8 @@ const Course = require('../models/CoursesModel');
 const EventsModel = require('../models/EventsModel');
 const QuizModel = require('../models/QuizModal')
 const BlogsModel = require('../models/BlogsModel')
-const ourCourseModel = require('../models/OurCourse')
+const ourCourseModel = require('../models/OurCourse');
+const heroimagesModal = require('../models/HeroImages');
 
 // Define required fields for each model
 const companyRequiredFields = ['name', 'image'];
@@ -24,13 +25,13 @@ const youtubeVideosRequiredFields = [ 'url', 'title', 'description'];
 const advantageRequiredFields = ['image', 'title', 'content'];
 const userRegisterRequiredFields = ['name', 'email', 'phone', 'course'];
 const FaqRequiredFields = ['question', 'answer']
-const HeroSectionRequiredFields = ['heroText', 'image', 'rating', 'partners', 'minSalary']
-const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage", 'courseDescription', 'certification', 'courseFor', 'designation', 'salaryDescription', 'courseHeroPoints', 'courseType']
+const HeroImagesRequiredFields = ['about', 'image',]
+const CourseRequiredFields = ['courseName', 'courseDuration', 'enrolledStudents', 'modeOfTraining', 'courseVideo', 'minSalary', 'HighestSalary', 'BatchStarting', 'heroTitle', 'heroSubtitle', 'modules', 'faqs', 'instructors', 'programmingLanguages',"courseImage", 'courseDescription', 'certification', 'courseFor', 'designation', 'salaryDescription', 'courseHeroPoints']
 const EventsRequiredFields = ['image', 'title', 'tag',
 'content', 'date', 'time', "eventType", "topic"]
 const QuizRequiredFields = ['question', 'answers', 'correctAnswer']
 const BlogsRequiredFields = ['title', 'subtitle', 'image', 'content']
-const OurCourseRequiredFields = ['image', 'courseName', 'description', 'courseDuration', 'HighestCtc', 'BatchStarting', 'PageLink', 'courses', 'courePoints', 'certificate', 'courseDescription', 'salaryDescription', 'courseFor', 'designation']
+const OurCourseRequiredFields = ['image', 'courseName', 'description', 'courseDuration', 'HighestCtc', 'BatchStarting', 'PageLink', 'courses', 'courePoints', 'certification', 'courseDescription', 'salaryDescription', 'courseFor', 'designation']
 
 
 
@@ -42,7 +43,7 @@ const YoutubeVideosController = createController(YoutubeVideos, youtubeVideosReq
 const advantageController = createController(AdwantagesModel, advantageRequiredFields);
 const userRegisterController = createController(RegisterModel, userRegisterRequiredFields)
 const FaqController = createController(FaqModel, FaqRequiredFields)
-const HeroSectionController = createController(HeroSectionModel, HeroSectionRequiredFields)
+const HeroImagesController = createController(heroimagesModal, HeroImagesRequiredFields)
 const CourseController = createController(Course, CourseRequiredFields)
 const EventsController = createController(EventsModel, EventsRequiredFields)
 const QuizController = createController(QuizModel, QuizRequiredFields)
@@ -113,6 +114,11 @@ router.get('/Quiz/:id', QuizController.getById);
 router.put('/Quiz/update/:id', QuizController.update);
 router.delete('/Quiz/delete/:id', QuizController.remove);
 
+router.get('/heroImages', HeroImagesController.getAll);
+router.post('/heroImages/add', HeroImagesController.create);
+router.get('/heroImages/:id', HeroImagesController.getById);
+router.put('/heroImages/update/:id', HeroImagesController.update);
+router.delete('/heroImages/delete/:id', HeroImagesController.remove);
 
 //courses
 router.post('/courses', CourseController.create);

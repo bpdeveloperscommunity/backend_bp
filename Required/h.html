@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Easy Photo Editor</title>
+    <style>
+        body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+canvas {
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+#controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+input, button {
+    margin: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <canvas id="canvas"></canvas>
+    <div id="controls">
+        <label for="brightness">Brightness:</label>
+        <input type="range" id="brightness" min="0" max="200" value="100">
+
+        <label for="saturation">Saturation:</label>
+        <input type="range" id="saturation" min="0" max="200" value="100">
+
+        <label for="contrast">Contrast:</label>
+        <input type="range" id="contrast" min="0" max="200" value="100">
+
+        <label for="shadow">Shadow:</label>
+        <input type="range" id="shadow" min="0" max="50" value="0">
+
+        <label for="hue">Hue:</label>
+        <input type="range" id="hue" min="0" max="360" value="0">
+
+        <label for="exposure">Exposure:</label>
+        <input type="range" id="exposure" min="0" max="200" value="100">
+
+        <label for="grayscale">Grayscale:</label>
+        <input type="checkbox" id="grayscale">
+
+        <button id="resetBtn">Reset</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // Step 1: Get references to HTML elements
+    const imageInput = document.getElementById("imageInput");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const brightnessInput = document.getElementById("brightness");
+    const saturationInput = document.getElementById("saturation");
+    const contrastInput = document.getElementById("contrast");
+    const shadowInput = document.getElementById("shadow");
+    const hueInput = document.getElementById("hue");
+    const exposureInput = document.getElementById("exposure");
+    const grayscaleCheckbox = document.getElementById("grayscale");
+    const resetBtn = document.getElementById("resetBtn");
+
+    let img;
+
+    // Step 2: Add event listeners
+    imageInput.addEventListener("change", handleImage);
+    brightnessInput.addEventListener("input", updateImage);
+    saturationInput.addEventListener("input", updateImage);
+    contrastInput.addEventListener("input", updateImage);
+    shadowInput.addEventListener("input", updateImage);
+    hueInput.addEventListener("input", updateImage);
+    exposureInput.addEventListener("input", updateImage);
+    grayscaleCheckbox.addEventListener("change", updateImage);
+    resetBtn.addEventListener("click", resetImage);
+
+    // Step 3: Define functions
+    function handleImage(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            img = new Image();
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function updateImage() {
+    if (!img) return;
+
+    // Step 4: Get input values
+    const brightnessValue = brightnessInput.value;
+    const saturationValue = saturationInput.value;
+    const contrastValue = contrastInput.value;
+    const shadowValue = shadowInput.value;
+    const hueValue = hueInput.value;
+    const exposureValue = exposureInput.value;
+    const grayscale = grayscaleCheckbox.checked;
+
+    // Step 5: Apply filters to the canvas
+    ctx.filter = `brightness(${brightnessValue}%) saturate(${saturationValue}%) contrast(${contrastValue}%) drop-shadow(0 0 ${shadowValue}px rgba(0, 0, 0, 0.5)) hue-rotate(${hueValue}deg) brightness(${exposureValue}%) grayscale(${grayscale ? 1 : 0})`;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+}
+    function resetImage() {
+        if (!img) return;
+
+        // Step 6: Reset input values and canvas
+        ctx.filter = "none";
+        brightnessInput.value = 100;
+        saturationInput.value = 100;
+        contrastInput.value = 100;
+        shadowInput.value = 0;
+        hueInput.value = 0;
+        exposureInput.value = 100;
+        grayscaleCheckbox.checked = false;
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+});
+
+    </script>
+</body>
+</html>

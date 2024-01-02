@@ -25,6 +25,10 @@ const courseSchema = new mongoose.Schema({
     title: String,
     topics: String,
 }],
+SEO:{
+    title:String,
+    description:String
+},
 
 faqs: [{
     question: String,
