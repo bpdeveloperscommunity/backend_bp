@@ -190,7 +190,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3300;
+const port = process.env.PORT || 3000;
 const routeEngine = require('./routes/RouterEngine');
 const cors = require('cors');
 const multer = require('multer');
