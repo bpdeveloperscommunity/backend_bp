@@ -10,7 +10,7 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 const courseRegisterModal = require('./models/courseRegister')
 const { registerUser, sendBrochure } = require('./templates/emailTemplates');
-const { sendEmail } = require('./required/mailer');
+const { sendEmail } = require('./templates/mailer');
 
 
 app.use(express.json()); 
