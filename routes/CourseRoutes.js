@@ -11,7 +11,7 @@ router.post('/allcourses/:courseId/languages', courseController.addLanguagesToCo
 router.post('/allcourses/:id/subcourses', courseController.addSubCourseToCourse);
 router.put('/allcourses/:courseId/subcourses/:subCourseId', courseController.updateSubCourse);
 router.delete('/allcourses/:courseId/subcourses/:subCourseId', courseController.deleteSubCourse);
-router.get('/allcourses/:courseId/subcourses/:subCourseId', courseController.getSubCourseById);
+router.get('/allcourses/:courseId/1/:subCourseId', courseController.getSubCourseById);
 router.get('/allcourses', courseController.getAllCourses);
 
 

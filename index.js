@@ -3,14 +3,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3300;
+const port = process.env.PORT || 3500;
 const routeEngine = require('./routes/RouterEngine');
 const cors = require('cors');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const courseRegisterModal = require('./models/courseRegister')
 const { registerUser, sendBrochure } = require('./templates/emailTemplates');
-const { sendEmail } = require('./templates/mailer');
+const { sendEmail } = require('./Required/mailer');
 
 
 app.use(express.json()); 
@@ -123,7 +123,7 @@ app.post('/course/register', async (req, res) => {
 
     // Send registration email
     const registrationEmail = registerUser(name, email, downloadLink);
-    await sendEmail(email, 'Registration Successful', registrationEmail);
+    await sendEmail(email, 'registartion is  Successful', registrationEmail);
 
     res.status(200).send('Registration successful. Brochure download link sent to your email.');
   } catch (error) {

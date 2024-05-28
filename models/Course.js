@@ -9,6 +9,12 @@ const faqSchema = new mongoose.Schema({
     image: String,
     name: String
   });
+  const modulesSchema = new mongoose.Schema({
+    
+      title:String,
+      description:String
+    
+  });
 
 const subCourseSchema = new mongoose.Schema({
   tag:String,
@@ -20,10 +26,7 @@ const subCourseSchema = new mongoose.Schema({
   courseDescription:String,
   certification:String,
   courseFor:String,
-  modules:[{
-    title:String,
-    description:String
-  }],
+  modules:[modulesSchema],
   Benifits:String,
   Designation:String,
   AnnualSalary:String,
@@ -58,6 +61,7 @@ const courseSchema = new mongoose.Schema({
   Designation:String,
   AnnualSalary:String,
   faqs: [faqSchema],
+  modules:[modulesSchema],
   programmingLanguages: [languagesSchema],
   seo:{
     title:String,
